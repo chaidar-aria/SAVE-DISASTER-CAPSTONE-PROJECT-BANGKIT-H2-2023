@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Safe Disaster</string>
+    <string name="call_bnpb">BNPB</string>
+    <string name="call_police">POLISI</string>
+    <string name="call_ambulance">AMBULANCE</string>
+    <string name="call_firefighter">DAMKAR</string>
+    <string name="call_sar">SAR</string>
+    <string name="call_basarnas">BASARNAS</string>
+    <string name="call_tni">TNI</string>
+    <string name="menu_home">Beranda</string>
+    <string name="menu_maps">Peta</string>
+    <string name="menu_profile">Profil</string>
 </resources>
