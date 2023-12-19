@@ -19,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bangkitcapstone.safedisaster.R
 import com.bangkitcapstone.safedisaster.model.EmergencyCategory
+import com.bangkitcapstone.safedisaster.ui.theme.BrownLight
+import com.bangkitcapstone.safedisaster.ui.theme.PurpleMain
 import com.bangkitcapstone.safedisaster.ui.theme.SafeDisasterTheme
 
 @Composable
@@ -32,7 +34,7 @@ fun EmergencyNumberCard(
     ) {
         Card(
             colors = CardDefaults.cardColors(
-                containerColor = Color(0xFFEBE3D5)
+                containerColor = BrownLight
             ),
             modifier = Modifier
                 .size(width = 71.dp, height = 75.dp)
@@ -48,7 +50,7 @@ fun EmergencyNumberCard(
         Text(
             text = stringResource(emergencyCategory.textCategory),
             modifier = Modifier.padding(top = 8.dp),
-            color = Color(0xFF31304D),
+            color = PurpleMain,
             fontSize = MaterialTheme.typography.titleMedium.fontSize,
             fontWeight = FontWeight.SemiBold
         )

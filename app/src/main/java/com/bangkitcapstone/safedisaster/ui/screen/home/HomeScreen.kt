@@ -1,33 +1,25 @@
-package com.bangkitcapstone.safedisaster.ui.screen
+package com.bangkitcapstone.safedisaster.ui.screen.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,9 +31,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.bangkitcapstone.safedisaster.R
 import com.bangkitcapstone.safedisaster.model.emergencyCategoryList
 import com.bangkitcapstone.safedisaster.ui.component.EmergencyNumberCard
-import com.bangkitcapstone.safedisaster.ui.theme.SafeDisasterTheme
+import com.bangkitcapstone.safedisaster.ui.theme.BrownLight
+import com.bangkitcapstone.safedisaster.ui.theme.LightRed
+import com.bangkitcapstone.safedisaster.ui.theme.OldRed
+import com.bangkitcapstone.safedisaster.ui.theme.PurpleMain
 
 @Composable
 fun HomeScreen() {
@@ -49,38 +45,38 @@ fun HomeScreen() {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(),
-        color = Color(0xFF31304D) // Use the Color class to represent the color
+        color = PurpleMain // Use the Color class to represent the color
     ) {
         ConstraintLayout(
             Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
-            val (topText, culm) = createRefs()
+            val ( culm) = createRefs()
             Row {
                 Column {
                     Text(
                         text = "Selamat Siang",
                         color = Color.White,
                         modifier = Modifier.padding(top = 32.dp, start = 32.dp),
-                        fontSize = 20.sp,
+                        fontSize = 15.sp,
                         fontWeight = FontWeight.Normal
                     )
                     Text(
                         text = "Ini namamu",
                         color = Color.White,
                         modifier = Modifier.padding(top = 10.dp, start = 32.dp),
-                        fontSize = 30.sp,
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
                 Image(
-                    painter = painterResource(id = com.bangkitcapstone.safedisaster.R.drawable.ic_launcher_background),
+                    painter = painterResource(id = R.drawable.ic_launcher_background),
                     contentDescription = "profile_screen_bg",
                     modifier = Modifier
-                        .padding(top = 32.dp, start = 32.dp)
+                        .padding(top = 32.dp, start = 50.dp)
                         .clip(RoundedCornerShape(10.dp))
-                        .requiredHeight(100.dp)
+                        .requiredHeight(50.dp)
                         .fillMaxWidth()
                 )
             }
@@ -101,35 +97,43 @@ fun HomeScreen() {
             ) {
                 Card(
                     colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFEBE3D5)
+                        containerColor = BrownLight
                     ),
                     modifier = Modifier
                         .size(width = 300.dp, height = 150.dp)
                         .align(Alignment.CenterHorizontally)
                 ) {
                     Row {
-                        Text(
-                            text = "Ini nanti icon buat\n cuaca ya chai",
+                        Image(
+                            painterResource(id = R.drawable.cloud) ,
+                            contentDescription = "Cuaca hari ini",
                             modifier = Modifier
-                                .padding(16.dp),
-                            textAlign = TextAlign.Center,
+                                .padding(top = 53.dp, start = 16.dp)
+                                .requiredWidth(50.dp)
+
                         )
-                        Column {
+                        Column(
+                            modifier = Modifier.padding
+                                (start=23.dp)
+                        ) {
                             Text(
                                 text = "Cuaca di Surabaya",
                                 modifier = Modifier
-                                    .padding(16.dp),
+                                    .padding(top = 16.dp),
                                 textAlign = TextAlign.Center,
+                                color = PurpleMain
                             )
                             Text(
                                 text = "Mendung",
                                 modifier = Modifier
-                                    .padding(16.dp),
+                                    .padding(top= 5.dp),
                                 textAlign = TextAlign.Center,
+                                color = PurpleMain
                             )
                             Text(
                                 text = "28/32°C Terasa seperti 28°C",
-                                modifier = Modifier.padding(16.dp)
+                                modifier = Modifier.padding(top = 5.dp),
+                                color = PurpleMain
                             )
                         }
                     }
@@ -137,65 +141,66 @@ fun HomeScreen() {
                 }
                 Text(
                     text = "Bencana di sekitar anda",
-                    color = Color(0xFF31304D),
+                    color = PurpleMain,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 10.dp)
                 )
                 Text(
                     text = "Waspada bencana disekitar anda",
-                    color = Color(0xFF31304D),
+                    color = PurpleMain,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier.padding(top = 5.dp)
                 )
                 Card(
                     colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFFFCFCF)
+                        containerColor = LightRed
                     ),
                     modifier = Modifier
-                        .size(width = 345.dp, height = 190.dp)
+                        .size(width = 345.dp, height = 150.dp)
                         .padding(top = 10.dp)
                 ) {
                     Row {
                         Column(modifier = Modifier.padding(start = 14.dp)){
                             Text(
                                 text = "Waspada Gempa Bumi",
-                                color = Color(0xFF990000),
+                                color = OldRed,
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(top = 40.dp)
+                                modifier = Modifier.padding(top = 15.dp)
                             )
                             Text(
                                 text = "Pusat Gempa: Barat Daya Malang",
-                                color = Color(0xFF900000),
+                                color = OldRed,
                                 fontSize = 15.sp,
                                 fontWeight = FontWeight.Normal,
                                 modifier = Modifier.padding(top = 5.dp)
                             )
                             Text(
                                 text = "Magnitudo: 5.5",
-                                color = Color(0xFF900000),
+                                color = OldRed,
                                 fontSize = 15.sp,
                                 fontWeight = FontWeight.Normal,
                                 modifier = Modifier.padding(top = 5.dp)
                             )
                             Text(
                                 text = "BERPOTENSI TSUNAMI!",
-                                color = Color(0xFF990000),
+                                color = OldRed,
                                 fontSize = 15.sp,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(top = 5.dp)
                             )
                         }
                         Text(
-                            text = "Ini nanti diisi icon ya chai"
+                            text = "Ini nanti diisi icon ya chai",
+                            color = PurpleMain
                         )
                     }
                 }
                 Text(
                     text = "Nomor darurat yang bisa diakses",
-                    color = Color(0xFF31304D),
+                    color = PurpleMain,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 10.dp)
