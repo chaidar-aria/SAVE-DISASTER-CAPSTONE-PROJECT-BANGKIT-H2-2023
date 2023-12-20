@@ -83,7 +83,8 @@ fun HomeScreen() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(675.dp)
+                    .fillMaxHeight()
+                    .padding(top = 100.dp)
                     .constrainAs(culm) {
                         bottom.linkTo(parent.bottom)
                     }

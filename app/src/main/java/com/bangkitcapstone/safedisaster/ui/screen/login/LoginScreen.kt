@@ -60,7 +60,8 @@ fun LoginScreen(openDashboard: () -> Unit) {
             .fillMaxWidth()
             .fillMaxHeight(),
         color = BrownVeryLight // Use the Color class to represent the color
-    ){        LazyColumn(
+    ) {
+        LazyColumn(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -79,9 +80,7 @@ fun LoginScreen(openDashboard: () -> Unit) {
                             }) {
                         HeaderView()
                     }
-                    Card(
-                        shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp),
-                        backgroundColor = BrownSemiLight,
+                    Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(top = 100.dp)
@@ -89,134 +88,140 @@ fun LoginScreen(openDashboard: () -> Unit) {
                                 bottom.linkTo(parent.bottom)
                                 start.linkTo(parent.start)
                                 end.linkTo(parent.end)
-                            },
+                            }
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(30.dp)
-                        ) {
-
-                            val loginText = "Log in to your account."
-                            val loginWord = "Log in"
-                            val loginAnnotatedString = buildAnnotatedString {
-                                append(loginText)
-                                addStyle(
-                                    style = SpanStyle(
-                                        color = BrownVeryLight,
-                                        fontWeight = FontWeight.Normal,
-                                    ),
-                                    start = 0,
-                                    end = loginText.length
-                                )
-                                addStyle(
-                                    style = SpanStyle(
-                                        color = BrownVeryLight,
-                                        fontWeight = FontWeight.Medium,
-                                    ),
-                                    start = 0,
-                                    end = loginWord.length
-                                )
-                            }
-
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 10.dp, bottom = 20.dp),
-                                text = loginAnnotatedString,
-                                textAlign = TextAlign.Center,
-                                fontSize = 22.sp,
-                            )
-                            Text(
-                                text = "Email Address",
-                                style = MaterialTheme.typography.subtitle1.copy(color = BrownVeryLight),
-                                modifier = Modifier.padding(bottom = 10.dp, top = 10.dp)
-                            )
-
-                            CustomStyleTextField(
-                                "Email Address",
-                                R.drawable.email,
-                                KeyboardType.Email,
-                                VisualTransformation.None
-                            )
-
-                            androidx.compose.material.Text(
-                                text = "Password",
-                                style = MaterialTheme.typography.subtitle1.copy(color = BrownVeryLight),
-                                modifier = Modifier.padding(bottom = 10.dp, top = 20.dp)
-                            )
-                            CustomStyleTextField(
-                                "Password",
-                                R.drawable.password,
-                                KeyboardType.Password,
-                                PasswordVisualTransformation()
-                            )
-
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 10.dp),
-                                text = "Forgot Password",
-                                textAlign = TextAlign.End,
-                                style = MaterialTheme.typography.subtitle2.copy(color = BrownVeryLight)
-                            )
-                            Button(
-                                onClick = openDashboard,
-                                modifier = Modifier
-                                    .padding(top = 30.dp, bottom = 34.dp)
-                                    .align(Alignment.CenterHorizontally)
-                                    .fillMaxWidth(),
-                                shape = RoundedCornerShape(16.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = BrownDark,
-                                    contentColor = BrownVeryLight
-                                )
-                            ) {
-                                Text(
-                                    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
-                                    text = "Login",
-                                    color = BrownVeryLight,
-                                    style = MaterialTheme.typography.button
-                                )
-                            }
-
-                            val signInText = "Don't have an account? Sign In"
-                            val signInWord = "Sign In"
-                            val signInAnnotatedString = buildAnnotatedString {
-                                append(signInText)
-                                addStyle(
-                                    style = SpanStyle(
-                                        color = BrownVeryLight,
-                                        fontWeight = FontWeight.Normal,
-                                    ),
-                                    start = 0,
-                                    end = signInText.length
-                                )
-                                addStyle(
-                                    style = SpanStyle(
-                                        color = BrownDark,
-                                        fontWeight = FontWeight.Medium,
-                                    ),
-                                    start = signInText.indexOf(signInWord),
-                                    end = signInText.length
-                                )
-                            }
-
-                            Text(
-                                modifier = Modifier.fillMaxWidth(),
-                                text = signInAnnotatedString,
-                                style = TextStyle(
-                                    fontSize = 14.sp
-                                ),
-                                textAlign = TextAlign.Center
-                            )
-                        }
+                        LoginFormContent(openDashboard = openDashboard)
                     }
                 }
             }
         }
     }
 }
+
+@Composable
+fun LoginFormContent(openDashboard: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(30.dp)
+    ) {
+
+        val loginText = "Log in to your account."
+        val loginWord = "Log in"
+        val loginAnnotatedString = buildAnnotatedString {
+            append(loginText)
+            addStyle(
+                style = SpanStyle(
+                    color = BrownDark,
+                    fontWeight = FontWeight.Normal,
+                ),
+                start = 0,
+                end = loginText.length
+            )
+            addStyle(
+                style = SpanStyle(
+                    color = BrownDark,
+                    fontWeight = FontWeight.Medium,
+                ),
+                start = 0,
+                end = loginWord.length
+            )
+        }
+
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, bottom = 20.dp),
+            text = loginAnnotatedString,
+            textAlign = TextAlign.Center,
+            fontSize = 22.sp,
+        )
+        Text(
+            text = "Email Address",
+            style = MaterialTheme.typography.subtitle1.copy(color = BrownDark),
+            modifier = Modifier.padding(bottom = 10.dp, top = 10.dp)
+        )
+
+        CustomStyleTextField(
+            "Email Address",
+            R.drawable.email,
+            KeyboardType.Email,
+            VisualTransformation.None
+        )
+
+        androidx.compose.material.Text(
+            text = "Password",
+            style = MaterialTheme.typography.subtitle1.copy(color = BrownDark),
+            modifier = Modifier.padding(bottom = 10.dp, top = 20.dp)
+        )
+        CustomStyleTextField(
+            "Password",
+            R.drawable.password,
+            KeyboardType.Password,
+            PasswordVisualTransformation()
+        )
+
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp),
+            text = "Forgot Password",
+            textAlign = TextAlign.End,
+            style = MaterialTheme.typography.subtitle2.copy(color = BrownDark)
+        )
+        Button(
+            onClick = openDashboard,
+            modifier = Modifier
+                .padding(top = 30.dp, bottom = 34.dp)
+                .align(Alignment.CenterHorizontally)
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = BrownDark,
+                contentColor = BrownSemiLight
+            )
+        ) {
+            Text(
+                modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+                text = "Login",
+                color = BrownVeryLight,
+                style = MaterialTheme.typography.button
+            )
+        }
+
+        val signInText = "Don't have an account? Sign In"
+        val signInWord = "Sign In"
+        val signInAnnotatedString = buildAnnotatedString {
+            append(signInText)
+            addStyle(
+                style = SpanStyle(
+                    color = BrownSemiLight,
+                    fontWeight = FontWeight.Normal,
+                ),
+                start = 0,
+                end = signInText.length
+            )
+            addStyle(
+                style = SpanStyle(
+                    color = BrownDark,
+                    fontWeight = FontWeight.Medium,
+                ),
+                start = signInText.indexOf(signInWord),
+                end = signInText.length
+            )
+        }
+
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = signInAnnotatedString,
+            style = TextStyle(
+                fontSize = 14.sp
+            ),
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
 
 @Composable
 fun CustomStyleTextField(
