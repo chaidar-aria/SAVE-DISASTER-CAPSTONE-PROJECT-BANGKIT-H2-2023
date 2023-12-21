@@ -33,4 +33,14 @@
 
     <string name="garut">Garut</string>
     <string name="sukabumi">Sukabumi</string>
+    <string name="cianjur">Cianjur</string>
+    <string name="pelabuhan_ratu">Pelabuhan Ratu</string>
+    <string name="cilacap">Cilacap</string>
+    <string name="gunung_kidul">Gunung Kidul</string>
+    <string name="pacitan">Pacitan</string>
+    <string name="pangandaran">Pangandaran</string>
+    <string name="tulungagung">Tulungagung</string>
+
+    <string name="peta_klasterisasi_2022">Peta Klasterisasi 2022</string>
+    <string name="peta_klasterisasi_2023">Peta Klasterisasi 2023</string>
 </resources>

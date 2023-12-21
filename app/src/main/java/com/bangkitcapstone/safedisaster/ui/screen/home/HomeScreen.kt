@@ -3,11 +3,9 @@ package com.bangkitcapstone.safedisaster.ui.screen.home
 import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,7 +38,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.core.content.ContextCompat
 import com.bangkitcapstone.safedisaster.R
 import com.bangkitcapstone.safedisaster.model.emergencyCategoryList
 import com.bangkitcapstone.safedisaster.ui.component.EmergencyNumberCard
@@ -51,11 +48,8 @@ import com.bangkitcapstone.safedisaster.ui.theme.PurpleMain
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.getValue
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -64,14 +58,20 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    val dataGempa = viewModel.dataGempa.collectAsState().value
-
-    val permissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
-    LaunchedEffect(true) {
-        permissionState.launchPermissionRequest()
+    LaunchedEffect(Unit){
+        viewModel.loadData(context)
     }
 
-    if (permissionState.hasPermission) {
+    val dataGempa = viewModel.dataGempa.collectAsState().value
+
+    // Location permission state
+    val locationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
+    LaunchedEffect(true) {
+        locationPermissionState.launchPermissionRequest()
+    }
+
+
+    if (locationPermissionState.hasPermission) {
         viewModel.getLocationNewest(context)
         val location = viewModel.locationState.observeAsState().value
         val locationName = location?.let {
@@ -147,22 +147,16 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
                         .align(Alignment.CenterHorizontally)
                 ) {
                     Row {
-                        Image(
-                            painterResource(id = R.drawable.cloud),
-                            contentDescription = "Cuaca hari ini",
-                            modifier = Modifier
-                                .padding(top = 53.dp, start = 16.dp)
-                                .requiredWidth(50.dp)
-
-                        )
                         Column(
                             modifier = Modifier.padding
                                 (start = 23.dp)
                         ) {
-//                            val lokasiSekarang = location?.toString() ?: "Locating..."
-//                            Log.d("HomeScreen", "lokasiSekarang: $lokasiSekarang")
+                            val lokasiTerkini = viewModel.locationState.observeAsState().value
+                            val namaLokasi = lokasiTerkini?.let {
+                                viewModel.getLocationName(context, it.latitude, it.longitude)
+                            } ?: "Mencari Lokasi..."
                             Text(
-                                text = "Cuaca di Surabaya",
+                                text = "Cuaca di ${namaLokasi}",
                                 modifier = Modifier
                                     .padding(top = 16.dp),
                                 textAlign = TextAlign.Center,

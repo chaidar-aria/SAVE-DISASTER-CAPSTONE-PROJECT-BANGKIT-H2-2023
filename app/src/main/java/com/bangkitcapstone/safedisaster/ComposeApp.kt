@@ -12,11 +12,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.bangkitcapstone.safedisaster.model.EvacuationRouteModel
+import com.bangkitcapstone.safedisaster.model.clasterizationList
 import com.bangkitcapstone.safedisaster.model.evacuationRouteList
 import com.bangkitcapstone.safedisaster.preferences.UserPreference
 import com.bangkitcapstone.safedisaster.ui.navigation.Actions
 import com.bangkitcapstone.safedisaster.ui.navigation.Destination
+import com.bangkitcapstone.safedisaster.ui.screen.clasterization.ClasterizationScreenDetail
 import com.bangkitcapstone.safedisaster.ui.screen.dashboard.DashboardScreen
 import com.bangkitcapstone.safedisaster.ui.screen.evacuation.EvacuationRouteDetail
 import com.bangkitcapstone.safedisaster.ui.screen.login.LoginScreen
@@ -73,6 +74,18 @@ fun ComposeApp() {
                 val routeModel = evacuationRouteList.find { it.textCategoryEvacuationRoute == routeId }
                 routeModel?.let {
                     EvacuationRouteDetail(model = it, textCategory = null)
+                }
+            }
+
+            composable(
+                "${Destination.ClasterizationScreenDetail}/{routeId}",
+                arguments = listOf(navArgument("routeId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val routeId = backStackEntry.arguments?.getInt("routeId")
+                val routeModel = clasterizationList.find { it.textCategoryClasterization == routeId }
+                routeModel?.let {
+                    ClasterizationScreenDetail(model = it, textCategory = null)
+
                 }
             }
         }

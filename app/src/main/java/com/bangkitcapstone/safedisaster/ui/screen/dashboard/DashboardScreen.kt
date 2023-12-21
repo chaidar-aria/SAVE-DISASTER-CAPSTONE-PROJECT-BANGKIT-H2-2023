@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.bangkitcapstone.safedisaster.R
 import com.bangkitcapstone.safedisaster.ui.navigation.Actions
+import com.bangkitcapstone.safedisaster.ui.screen.clasterization.ClasterizationScreen
 import com.bangkitcapstone.safedisaster.ui.screen.evacuation.EvacuationRoute
 import com.bangkitcapstone.safedisaster.ui.screen.home.HomeScreen
 import com.bangkitcapstone.safedisaster.ui.screen.maps.MapsScreen
@@ -43,6 +44,7 @@ fun DashboardScreen(actions: Actions, navController: NavController) {
                 when (selectedIndex.intValue) {
                     0 -> HomeScreen()
                     1 -> EvacuationRoute(actions, navController)
+                    2 -> ClasterizationScreen(actions, navController)
                 }
             },
             bottomBar = {
@@ -57,7 +59,7 @@ fun DashboardScreen(actions: Actions, navController: NavController) {
 @Composable
 fun CustomBottomBar(selectedIndex: MutableState<Int>) {
 
-    val listItems = listOf("Home", "EvacuationRoute")
+    val listItems = listOf("Home", "EvacuationRoute", "Clasterization")
 
     androidx.compose.material.Card(
         elevation = 0.dp,
@@ -75,6 +77,7 @@ fun CustomBottomBar(selectedIndex: MutableState<Int>) {
                         when (index) {
                             0 -> TabIcons(R.drawable.home, isSelected)
                             1 -> TabIcons(R.drawable.map, isSelected)
+                            2 -> TabIcons(R.drawable.list, isSelected)
                         }
                     },
                     selected = isSelected,

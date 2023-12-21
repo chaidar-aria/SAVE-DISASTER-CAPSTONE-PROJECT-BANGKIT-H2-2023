@@ -12,10 +12,11 @@ object Destination {
     const val Settings = "Settings"
     const val EvacuationRoute = "EvacuationRoute"
     const val EvacuationRouteDetail = "EvacuationRouteDetail"
+    const val ClasterizationScreenDetail = "ClasterizationScreenDetail"
 
 }
 
-class Actions(navController: NavController){
+class Actions(navController: NavController) {
     val openDashboard: () -> Unit = {
         navController.navigate(Destination.Dashboard)
     }
@@ -26,5 +27,9 @@ class Actions(navController: NavController){
 
     val openEvacuationRouteDetail: (NavController, Int) -> Unit = { navController, routeId ->
         navController.navigate("${Destination.EvacuationRouteDetail}/$routeId")
+    }
+
+    val openClasterizationScreenDetail: (NavController, Int) -> Unit = { navController, routeId ->
+        navController.navigate("${Destination.ClasterizationScreenDetail}/$routeId")
     }
 }
