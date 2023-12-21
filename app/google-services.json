@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "181651090578",
+    "firebase_url": "https://capstone-project-407004-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "capstone-project-407004",
+    "storage_bucket": "capstone-project-407004.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181651090578:android:4f268cc358c38c3165ca4b",
+        "android_client_info": {
+          "package_name": "com.bangkitcapstone.safedisaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181651090578-lqrfr7rbru42lef5gk9c2p6sf9pmnncm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFMob0RMZm03s_WrnaJiorrxcZp70yKww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181651090578-lqrfr7rbru42lef5gk9c2p6sf9pmnncm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

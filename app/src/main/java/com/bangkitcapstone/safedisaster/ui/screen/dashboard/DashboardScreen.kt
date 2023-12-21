@@ -22,8 +22,10 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.bangkitcapstone.safedisaster.R
 import com.bangkitcapstone.safedisaster.ui.navigation.Actions
+import com.bangkitcapstone.safedisaster.ui.screen.evacuation.EvacuationRoute
 import com.bangkitcapstone.safedisaster.ui.screen.home.HomeScreen
 import com.bangkitcapstone.safedisaster.ui.screen.maps.MapsScreen
 import com.bangkitcapstone.safedisaster.ui.screen.profile.ProfileScreen
@@ -31,7 +33,7 @@ import com.bangkitcapstone.safedisaster.ui.theme.BrownDark
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun DashboardScreen(actions: Actions) {
+fun DashboardScreen(actions: Actions, navController: NavController) {
     val selectedIndex = remember {
         mutableIntStateOf(0)
     }
@@ -40,8 +42,7 @@ fun DashboardScreen(actions: Actions) {
             content = {
                 when (selectedIndex.intValue) {
                     0 -> HomeScreen()
-                    1 -> MapsScreen()
-                    2 -> ProfileScreen(actions)
+                    1 -> EvacuationRoute(actions, navController)
                 }
             },
             bottomBar = {
@@ -56,7 +57,7 @@ fun DashboardScreen(actions: Actions) {
 @Composable
 fun CustomBottomBar(selectedIndex: MutableState<Int>) {
 
-    val listItems = listOf("Home", "Maps", "Profile")
+    val listItems = listOf("Home", "EvacuationRoute")
 
     androidx.compose.material.Card(
         elevation = 0.dp,
@@ -74,7 +75,6 @@ fun CustomBottomBar(selectedIndex: MutableState<Int>) {
                         when (index) {
                             0 -> TabIcons(R.drawable.home, isSelected)
                             1 -> TabIcons(R.drawable.map, isSelected)
-                            2 -> TabIcons(R.drawable.person, isSelected)
                         }
                     },
                     selected = isSelected,

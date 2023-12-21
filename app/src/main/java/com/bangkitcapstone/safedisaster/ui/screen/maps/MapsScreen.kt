@@ -51,7 +51,7 @@ fun MapsScreen() {
     LaunchedEffect(key1 = true) {
         lifecycleOwner.lifecycle.whenStarted {
             locationPermissionState.launchPermissionRequest()
-            if (locationPermissionState.hasPermission) {
+            if (locationPermissionState.hasPermission){
                 try {
                     fusedLocationClient.lastLocation.addOnSuccessListener { loc: Location? ->
                         loc?.let {

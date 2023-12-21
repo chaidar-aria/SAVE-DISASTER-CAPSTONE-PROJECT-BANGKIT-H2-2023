@@ -1,6 +1,8 @@
 package com.bangkitcapstone.safedisaster.ui.component
 
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -11,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,7 +27,8 @@ import com.bangkitcapstone.safedisaster.ui.theme.SafeDisasterTheme
 @Composable
 fun EmergencyNumberCard(
     emergencyCategory: EmergencyCategory,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (Int) -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -38,7 +40,8 @@ fun EmergencyNumberCard(
             ),
             modifier = Modifier
                 .size(width = 71.dp, height = 75.dp)
-                .padding(8.dp), // Adjust padding as needed
+                .padding(8.dp)
+                .clickable { onClick(emergencyCategory.emergencyNumber) },
         ) {
             Image(
                 painter = painterResource(emergencyCategory.imageCategory),
@@ -63,10 +66,11 @@ fun EmergencyNumberCardPreview() {
     SafeDisasterTheme {
         EmergencyNumberCard(
             emergencyCategory = EmergencyCategory(
-                R.mipmap.icon_bnpb_foreground,
-                R.string.call_bnpb,
+                imageCategory = R.drawable.logo_bnpb,
+                textCategory = R.string.call_bnpb,
+                emergencyNumber = R.string.number_bnpb
             ),
-            modifier = Modifier.padding(horizontal = 8.dp)
+            onClick = {}
         )
     }
 }

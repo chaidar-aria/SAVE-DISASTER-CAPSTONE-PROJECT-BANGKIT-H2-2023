@@ -4,36 +4,25 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 object ApiConfig {
-    private const val baseURL = "https://story-api.dicoding.dev/v1/"
 
-    private var token = ""
+    // Ganti dengan URL yang sesuai
+    private const val baseURL = "https://data.bmkg.go.id/DataMKG/TEWS/"
 
-    fun setToken(value: String) {
-        token = value
-    }
-
-    fun getRetrofit(): Retrofit {
+    private fun getRetrofit(): Retrofit {
 
         val authInterceptor = Interceptor { chain ->
-            var request = chain.request()
-            if(request.header("No-Authentication") == null) {
-                if(token.isNotEmpty()) {
-                    val finalToken = "Bearer $token"
-                    request = request.newBuilder()
-                        .addHeader("Authorization", finalToken)
-                        .build()
-                }
-            }
-            chain.proceed(request)
+            val req = chain.request()
+            val requestHeaders = req.newBuilder()
+                // Ganti dengan mekanisme penyimpanan kunci API yang lebih aman
+//                .addHeader("X-RapidAPI-Key", "89bb0478aamsh0bcbdd01be5abdfp149f0ejsn5b83f6311b6a")
+                .build()
+            chain.proceed(requestHeaders)
         }
 
         val client = OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
             .build()
 
         return Retrofit.Builder()

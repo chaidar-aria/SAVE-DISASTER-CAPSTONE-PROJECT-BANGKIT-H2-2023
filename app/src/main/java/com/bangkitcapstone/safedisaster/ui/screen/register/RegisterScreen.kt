@@ -1,8 +1,6 @@
-package com.bangkitcapstone.safedisaster.ui.screen.login
+package com.bangkitcapstone.safedisaster.ui.screen.register
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -38,7 +36,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -46,9 +43,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -56,10 +51,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.bangkitcapstone.safedisaster.R
-import com.bangkitcapstone.safedisaster.preferences.UserPreference
 import com.bangkitcapstone.safedisaster.ui.navigation.Destination
 import com.bangkitcapstone.safedisaster.ui.theme.BrownDark
 import com.bangkitcapstone.safedisaster.ui.theme.BrownSemiLight
@@ -67,17 +60,12 @@ import com.bangkitcapstone.safedisaster.ui.theme.BrownVeryLight
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
+fun RegisterScreen(onRegisterSuccess: () -> Unit, navController: NavController) {
 
-    var email by remember {
-        mutableStateOf("")
-    }
-    var password by remember {
-        mutableStateOf("")
-    }
-
-    val context = LocalContext.current
-
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     Surface(
         modifier = Modifier
@@ -86,12 +74,14 @@ fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
         color = BrownVeryLight // Use the Color class to represent the color
     ) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
                 ConstraintLayout {
                     val (image, loginForm) = createRefs()
-                    Box(contentAlignment = Alignment.Center,
+                    Box(
+                        contentAlignment = Alignment.Center,
                         modifier = Modifier
                             .height(280.dp)
                             .constrainAs(image) {
@@ -102,35 +92,41 @@ fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
                             }) {
                         HeaderView()
                     }
-                    Box(modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 100.dp)
-                        .constrainAs(loginForm) {
-                            bottom.linkTo(parent.bottom)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        }) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = 50.dp)
+                            .constrainAs(loginForm) {
+                                bottom.linkTo(parent.bottom)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            }
+                    ) {
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(30.dp)
                         ) {
 
-                            val loginText = "Log in to your account."
-                            val loginWord = "Log in"
+                            val loginText = "Pendaftaran Akun"
+                            val loginWord = "Pendaftaran"
                             val loginAnnotatedString = buildAnnotatedString {
                                 append(loginText)
                                 addStyle(
                                     style = SpanStyle(
                                         color = BrownDark,
                                         fontWeight = FontWeight.Normal,
-                                    ), start = 0, end = loginText.length
+                                    ),
+                                    start = 0,
+                                    end = loginText.length
                                 )
                                 addStyle(
                                     style = SpanStyle(
                                         color = BrownDark,
                                         fontWeight = FontWeight.Medium,
-                                    ), start = 0, end = loginWord.length
+                                    ),
+                                    start = 0,
+                                    end = loginWord.length
                                 )
                             }
 
@@ -142,8 +138,9 @@ fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
                                 textAlign = TextAlign.Center,
                                 fontSize = 22.sp,
                             )
+
                             Text(
-                                text = "Email Address",
+                                text = "Alamat Email",
                                 style = MaterialTheme.typography.subtitle1.copy(color = BrownDark),
                                 modifier = Modifier.padding(bottom = 10.dp, top = 10.dp)
                             )
@@ -155,16 +152,15 @@ fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
                                 value = email,
                                 onValueChange = { email = it },
                                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                                placeholder = { androidx.compose.material.Text(text = "Email") },
+                                placeholder = { androidx.compose.material.Text(text = "Alamat Email") },
                                 leadingIcon = {
-                                    Row(modifier = Modifier.wrapContentWidth(),
+                                    Row(
+                                        modifier = Modifier.wrapContentWidth(),
                                         verticalAlignment = Alignment.CenterVertically,
                                         content = {
                                             Image(
                                                 modifier = Modifier
-                                                    .padding(
-                                                        start = 10.dp, end = 10.dp
-                                                    )
+                                                    .padding(start = 10.dp, end = 10.dp)
                                                     .size(18.dp),
                                                 painter = painterResource(id = R.drawable.email),
                                                 colorFilter = ColorFilter.tint(BrownDark),
@@ -181,7 +177,8 @@ fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
                                                     strokeWidth = 2.0F
                                                 )
                                             }
-                                        })
+                                        }
+                                    )
                                 },
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
                                     focusedBorderColor = BrownDark,
@@ -194,11 +191,12 @@ fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
                                 visualTransformation = VisualTransformation.None
                             )
 
-                            androidx.compose.material.Text(
-                                text = "Password",
+                            Text(
+                                text = "Kata Sandi",
                                 style = MaterialTheme.typography.subtitle1.copy(color = BrownDark),
-                                modifier = Modifier.padding(bottom = 10.dp, top = 20.dp)
+                                modifier = Modifier.padding(bottom = 10.dp, top = 10.dp)
                             )
+
                             OutlinedTextField(
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -206,16 +204,15 @@ fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
                                 value = password,
                                 onValueChange = { password = it },
                                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                                placeholder = { androidx.compose.material.Text(text = "Passowrd") },
+                                placeholder = { androidx.compose.material.Text(text = "Kata Sandi") },
                                 leadingIcon = {
-                                    Row(modifier = Modifier.wrapContentWidth(),
+                                    Row(
+                                        modifier = Modifier.wrapContentWidth(),
                                         verticalAlignment = Alignment.CenterVertically,
                                         content = {
                                             Image(
                                                 modifier = Modifier
-                                                    .padding(
-                                                        start = 10.dp, end = 10.dp
-                                                    )
+                                                    .padding(start = 10.dp, end = 10.dp)
                                                     .size(18.dp),
                                                 painter = painterResource(id = R.drawable.password),
                                                 colorFilter = ColorFilter.tint(BrownDark),
@@ -232,7 +229,59 @@ fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
                                                     strokeWidth = 2.0F
                                                 )
                                             }
-                                        })
+                                        }
+                                    )
+                                },
+                                colors = TextFieldDefaults.outlinedTextFieldColors(
+                                    focusedBorderColor = BrownDark,
+                                    unfocusedBorderColor = Color.Transparent,
+                                    focusedLabelColor = Color.White,
+                                    trailingIconColor = Color.White,
+                                ),
+                                shape = RoundedCornerShape(10.dp),
+                                textStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
+                                visualTransformation = PasswordVisualTransformation()
+                            )
+
+                            Text(
+                                text = "Ulangi Kata Sandi",
+                                style = MaterialTheme.typography.subtitle1.copy(color = BrownDark),
+                                modifier = Modifier.padding(bottom = 10.dp, top = 20.dp)
+                            )
+                            OutlinedTextField(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(Color.White),
+                                value = confirmPassword,
+                                onValueChange = { confirmPassword = it },
+                                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                                placeholder = { androidx.compose.material.Text(text = "Ulangi Kata Sandi") },
+                                leadingIcon = {
+                                    Row(
+                                        modifier = Modifier.wrapContentWidth(),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        content = {
+                                            Image(
+                                                modifier = Modifier
+                                                    .padding(start = 10.dp, end = 10.dp)
+                                                    .size(18.dp),
+                                                painter = painterResource(id = R.drawable.email),
+                                                colorFilter = ColorFilter.tint(BrownDark),
+                                                contentDescription = "custom_text_field"
+                                            )
+                                            Canvas(
+                                                modifier = Modifier.height(24.dp)
+                                            ) {
+                                                // Allows you to draw a line between two points (p1 & p2) on the canvas.
+                                                drawLine(
+                                                    color = Color.LightGray,
+                                                    start = Offset(0f, 0f),
+                                                    end = Offset(0f, size.height),
+                                                    strokeWidth = 2.0F
+                                                )
+                                            }
+                                        }
+                                    )
                                 },
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
                                     focusedBorderColor = BrownDark,
@@ -249,18 +298,21 @@ fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 10.dp),
-                                text = "Forgot Password",
+                                text = "Lupa Kata Sandi",
                                 textAlign = TextAlign.End,
                                 style = MaterialTheme.typography.subtitle2.copy(color = BrownDark)
                             )
                             Button(
                                 onClick = {
-                                    performLogin(
-                                        context,
-                                        email,
-                                        password,
-                                        onLoginSuccess
-                                    )
+                                    if (password == confirmPassword) {
+                                        performRegistration(
+                                            email,
+                                            password,
+                                            onRegisterSuccess,
+                                            { msg -> errorMessage = msg })
+                                    } else {
+                                        errorMessage = "Passwords do not match"
+                                    }
                                 },
                                 modifier = Modifier
                                     .padding(top = 30.dp, bottom = 34.dp)
@@ -268,19 +320,20 @@ fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
                                     .fillMaxWidth(),
                                 shape = RoundedCornerShape(16.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = BrownDark, contentColor = BrownSemiLight
+                                    containerColor = BrownDark,
+                                    contentColor = BrownSemiLight
                                 )
                             ) {
                                 Text(
                                     modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
-                                    text = "Login",
+                                    text = "Daftar",
                                     color = BrownVeryLight,
                                     style = MaterialTheme.typography.button
                                 )
                             }
 
-                            val signInText = "Don't have an account? Sign In"
-                            val signInWord = "Sign In"
+                            val signInText = "Sudah memiliki akun? Login"
+                            val signInWord = "Login"
                             val signInAnnotatedString = buildAnnotatedString {
                                 append(signInText)
 
@@ -292,28 +345,37 @@ fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
                                         color = BrownDark,
                                         fontWeight = FontWeight.Medium,
                                         textDecoration = TextDecoration.Underline // Opsional: Tambahkan underline
-                                    ), start = startIndex, end = endIndex
+                                    ),
+                                    start = startIndex,
+                                    end = endIndex
                                 )
                                 addStringAnnotation(
-                                    tag = "REGISTER", // Tag unik untuk identifikasi klik
-                                    annotation = "RegisterScreen", // Data yang dikirim saat klik
-                                    start = startIndex, end = endIndex
+                                    tag = "LOGIN", // Tag unik untuk identifikasi klik
+                                    annotation = "LoginScreen", // Data yang dikirim saat klik
+                                    start = startIndex,
+                                    end = endIndex
                                 )
                             }
 
-                            ClickableText(text = signInAnnotatedString, style = TextStyle(
-                                fontSize = 14.sp, textAlign = TextAlign.Center
-                            ), onClick = { offset ->
-                                signInAnnotatedString.getStringAnnotations(
-                                    tag = "REGISTER",
-                                    start = offset,
-                                    end = offset
-                                ).firstOrNull()?.let { annotation ->
-                                        if (annotation.item == "RegisterScreen") {
-                                            navController.navigate(Destination.Register)
+                            ClickableText(
+                                text = signInAnnotatedString,
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    textAlign = TextAlign.Center
+                                ),
+                                onClick = { offset ->
+                                    signInAnnotatedString.getStringAnnotations(
+                                        tag = "LOGIN",
+                                        start = offset,
+                                        end = offset
+                                    )
+                                        .firstOrNull()?.let { annotation ->
+                                            if (annotation.item == "LoginScreen") {
+                                                navController.navigate(Destination.Login)
+                                            }
                                         }
-                                    }
-                            })
+                                }
+                            )
                         }
                     }
                 }
@@ -322,36 +384,24 @@ fun LoginScreen(onLoginSuccess: () -> Unit, navController: NavController) {
     }
 }
 
-private fun performLogin(
-    context: Context, email: String, password: String, onLoginSuccess: () -> Unit
+private fun performRegistration(
+    email: String,
+    password: String,
+    onRegisterSuccess: () -> Unit,
+    onRegisterFailure: (String) -> Unit
 ) {
-
-    if (email.isBlank()){
-        Toast.makeText(context, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
-        return
-    }
-    if (password.isBlank()){
-        Toast.makeText(context, "Password tidak boleh kosong", Toast.LENGTH_SHORT).show()
-        return
-    }
-
     val auth = FirebaseAuth.getInstance()
-    val sessionManager = UserPreference(context)
 
-    auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-        if (task.isSuccessful) {
-            Log.d("LoginSuccess", "Login berhasil dengan email: $email")
-            sessionManager.saveUserEmail(email)
-            onLoginSuccess()
-        } else {
-            // Menampilkan error ke pengguna
-            Toast.makeText(context, "Login gagal: ${task.exception?.localizedMessage}", Toast.LENGTH_LONG).show()
-            // Mencatat pesan error ke log
-            Log.e("LoginError", "Login gagal: ${task.exception?.localizedMessage}")
+    auth.createUserWithEmailAndPassword(email, password)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d("RegistrasiSuccess", "Registrasi berhasil dengan email: $email")
+                onRegisterSuccess()
+            } else {
+                Log.e("RegistrasiError", "Registrasi gagal: ${task.exception?.localizedMessage}")
+            }
         }
-    }
 }
-
 
 @Composable
 fun HeaderView() {
@@ -362,11 +412,15 @@ fun HeaderView() {
         Image(
             modifier = Modifier.wrapContentWidth(),
             bitmap = ImageBitmap.imageResource(id = R.drawable.application_logo),
-            contentDescription = "header_view_flower_logo"
+            contentDescription = "header_view_safedisaster_logo"
         )
-        androidx.compose.material.Text(
-            text = "FloraGoGo", color = Color.White, style = TextStyle(
-                fontSize = 40.sp, fontWeight = FontWeight.SemiBold, letterSpacing = 2.sp
+        Text(
+            text = "SafeDisaster",
+            color = Color.White,
+            style = TextStyle(
+                fontSize = 40.sp,
+                fontWeight = FontWeight.SemiBold,
+                letterSpacing = 2.sp
             )
         )
     }
@@ -375,5 +429,5 @@ fun HeaderView() {
 //@Preview(showBackground = true)
 //@Composable
 //fun DefaultPreview() {
-//    LoginScreen(onLoginSuccess = { })
+//    RegisterScreen( {}, NavController())
 //}

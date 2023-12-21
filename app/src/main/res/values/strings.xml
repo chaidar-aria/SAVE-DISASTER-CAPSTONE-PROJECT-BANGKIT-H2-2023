@@ -10,6 +10,9 @@
     <string name="menu_home">Beranda</string>
     <string name="menu_maps">Peta</string>
     <string name="menu_profile">Profil</string>
+    <string name="number_bnpb">02129827793</string>
+    <string name="number_police">110</string>
+    <string name="number_basarnas">115</string>
 
     <string name="permission_location_rationale">This app requires the location permission to be
     granted.</string>
@@ -27,4 +30,7 @@
     <string name="welcome_back">Selamat datang kembali</string>
     <string name="sign_in">Login</string>
     <string name="remember_me">Ingat saya</string>
+
+    <string name="garut">Garut</string>
+    <string name="sukabumi">Sukabumi</string>
 </resources>
