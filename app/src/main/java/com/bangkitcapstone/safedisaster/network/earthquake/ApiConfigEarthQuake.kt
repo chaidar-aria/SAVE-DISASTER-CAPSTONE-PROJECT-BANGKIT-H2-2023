@@ -1,16 +1,16 @@
-package com.bangkitcapstone.safedisaster.network
+package com.bangkitcapstone.safedisaster.network.earthquake
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ApiConfig {
+object ApiConfigEarthQuake {
 
     // Ganti dengan URL yang sesuai
     private const val baseURL = "https://data.bmkg.go.id/DataMKG/TEWS/"
 
-    private fun getRetrofit(): Retrofit {
+    private fun getRetrofitEarthQuake(): Retrofit {
 
         val authInterceptor = Interceptor { chain ->
             val req = chain.request()
@@ -32,7 +32,7 @@ object ApiConfig {
             .build()
     }
 
-    fun getService(): ApiService {
-        return getRetrofit().create(ApiService::class.java)
+    fun getServiceEarthQuake(): ApiServiceEarthQuake {
+        return getRetrofitEarthQuake().create(ApiServiceEarthQuake::class.java)
     }
 }

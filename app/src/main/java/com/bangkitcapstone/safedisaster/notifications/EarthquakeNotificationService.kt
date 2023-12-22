@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bangkitcapstone.safedisaster.R
 import com.bangkitcapstone.safedisaster.model.response.BmkgEarthQuakeResponse
-import com.bangkitcapstone.safedisaster.network.ApiConfig
+import com.bangkitcapstone.safedisaster.network.earthquake.ApiConfigEarthQuake
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,8 +20,8 @@ class EarthquakeNotificationService: ViewModel(){
     private val _dataGempaNotif = MutableLiveData<List<BmkgEarthQuakeResponse>>()
     val dataGempaNotif: MutableLiveData<List<BmkgEarthQuakeResponse>> = _dataGempaNotif
 
-    val apiService = ApiConfig.getService()
-    val call = apiService.getEarthquake()
+    val apiService = ApiConfigEarthQuake.getServiceEarthQuake()
+    val call = apiService.getEarthquakeEarthQuake()
 
     fun loadDataNotif(context: Context) {
         call.enqueue(object : Callback<BmkgEarthQuakeResponse> {

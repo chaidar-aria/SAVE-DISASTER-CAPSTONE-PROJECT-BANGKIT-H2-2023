@@ -6,7 +6,7 @@
 //import androidx.lifecycle.ViewModel
 //import androidx.lifecycle.viewModelScope
 //import com.bangkitcapstone.safedisaster.model.UserModel
-//import com.bangkitcapstone.safedisaster.network.ApiConfig
+//import com.bangkitcapstone.safedisaster.network.earthquake.ApiConfig
 //import com.bangkitcapstone.safedisaster.preferences.UserPreference
 //import com.chaidar.storyappsubmis.backend.response.LoginResponse
 //import kotlinx.coroutines.launch

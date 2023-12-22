@@ -60,9 +60,13 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
 
     LaunchedEffect(Unit) {
         viewModel.loadData(context)
+        viewModel.weatherData(context)
     }
 
     val dataGempa = viewModel.dataGempa.collectAsState().value
+
+    val dataCuaca = viewModel.dataWeather.collectAsState().value
+
 
     // Location permission state
     val locationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -180,19 +184,22 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
                                 textAlign = TextAlign.Center,
                                 color = PurpleMain
                             )
-
-                            Text(
-                                text = "Mendung",
-                                modifier = Modifier
-                                    .padding(top = 5.dp),
-                                textAlign = TextAlign.Center,
-                                color = PurpleMain
-                            )
-                            Text(
-                                text = "28/32°C Terasa seperti 28°C",
-                                modifier = Modifier.padding(top = 5.dp),
-                                color = PurpleMain
-                            )
+                            val latestWeather = dataCuaca.firstOrNull()
+                            Log.d("HomeScreen", "latestWeather: $latestWeather")
+                            if (latestWeather!=null) {
+                                Text(
+                                    text = "Cuaca: ${latestWeather.weather?.get(0)?.main}",
+                                    modifier = Modifier
+                                        .padding(top = 5.dp),
+                                    textAlign = TextAlign.Center,
+                                    color = PurpleMain
+                                )
+                                Text(
+                                    text = "Suhu: ${latestWeather.main?.temp}°C",
+                                    modifier = Modifier.padding(top = 5.dp),
+                                    color = PurpleMain
+                                )
+                            }
                         }
                     }
 
