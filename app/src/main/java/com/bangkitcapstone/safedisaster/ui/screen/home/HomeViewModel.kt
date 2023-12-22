@@ -38,8 +38,13 @@ class HomeViewModel : ViewModel() {
 
     private var apiKey: String = "cafccc7bf17f3e9ee98f94da97610491"
 
+    init{
+        loadData()
+        weatherData()
+    }
 
-    fun loadData(context: Context) {
+
+    fun loadData() {
         val apiService = getServiceEarthQuake()
         val call = apiService.getEarthquakeEarthQuake()
 
@@ -97,7 +102,7 @@ class HomeViewModel : ViewModel() {
         return "Lokasi tidak ditemukan"
     }
 
-    fun weatherData(context: Context) {
+    fun weatherData() {
 
         val latitude = locationState.value?.latitude ?: return
         val longitude = locationState.value?.longitude ?: return

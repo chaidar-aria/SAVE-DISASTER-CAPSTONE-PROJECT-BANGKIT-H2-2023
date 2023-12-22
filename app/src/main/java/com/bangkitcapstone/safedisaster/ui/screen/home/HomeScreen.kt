@@ -59,14 +59,13 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
-        viewModel.loadData(context)
-        viewModel.weatherData(context)
+        viewModel.loadData()
+        viewModel.weatherData()
     }
 
     val dataGempa = viewModel.dataGempa.collectAsState().value
 
     val dataCuaca = viewModel.dataWeather.collectAsState().value
-
 
     // Location permission state
     val locationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -178,7 +177,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
                                 viewModel.getLocationName(context, it.latitude, it.longitude)
                             } ?: "Mencari Lokasi..."
                             Text(
-                                text = "Cuaca di ${namaLokasi}",
+                                text = "Cuaca di $namaLokasi",
                                 modifier = Modifier
                                     .padding(top = 16.dp),
                                 textAlign = TextAlign.Center,
