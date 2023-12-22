@@ -49,8 +49,6 @@ class HomeViewModel: ViewModel() {
                     val title = "Gempa Terbaru"
                     val message = "Gempa di: ${earthquakeInfo.infogempa?.gempa?.wilayah}, Magnitudo: ${earthquakeInfo.infogempa?.gempa?.magnitude}"
 
-                    notificationService.sendNotification(context, title, message)
-
                 }
             }
 

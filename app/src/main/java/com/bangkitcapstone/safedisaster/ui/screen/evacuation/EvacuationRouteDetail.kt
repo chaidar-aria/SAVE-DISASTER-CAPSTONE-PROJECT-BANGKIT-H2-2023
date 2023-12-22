@@ -1,11 +1,19 @@
 package com.bangkitcapstone.safedisaster.ui.screen.evacuation
 
+import android.content.ContentValues
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,20 +35,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.core.content.ContextCompat
 import com.bangkitcapstone.safedisaster.R
 import com.bangkitcapstone.safedisaster.model.EvacuationRouteModel
 import com.bangkitcapstone.safedisaster.ui.theme.BrownDark
 import com.bangkitcapstone.safedisaster.ui.theme.BrownSemiLight
 import com.bangkitcapstone.safedisaster.ui.theme.BrownVeryLight
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun EvacuationRouteDetail(model: EvacuationRouteModel, textCategory: String?) {
-    var showDialog by remember { mutableStateOf(false) }  // State untuk kontrol dialog
+    val context = LocalContext.current
+
+    var showDialog by remember { mutableStateOf(false) }
 
 
     Surface(
@@ -82,78 +98,57 @@ fun EvacuationRouteDetail(model: EvacuationRouteModel, textCategory: String?) {
                     .padding(16.dp)
                     .wrapContentHeight(align = Alignment.Top)
             ) {
-                // Menambahkan keterangan untuk garis merah
                 Text(
                     text = "Garis Merah: Jalur yang harus dilewati saat evakuasi.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Black
                 )
-                // Menambahkan keterangan untuk garis tebal
                 Text(
                     text = "Garis Tebal: Jalan utama yang bisa dilewati banyak orang.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Black
                 )
-                // Menambahkan keterangan untuk warna biru
                 Text(
                     text = "Warna Biru: Area yang ada air, tidak bisa dilewati.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Black
                 )
-                // Menambahkan keterangan untuk warna terang
                 Text(
                     text = "Warna Terang: Daratan yang bisa digunakan untuk evakuasi.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Black
                 )
-                // Menambahkan keterangan untuk nama tempat
                 Text(
                     text = "Nama Tempat: Daerah yang ditunjukkan dalam peta.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Black
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                // Tombil untuk mengunduh peta evakuasi
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = BrownDark, contentColor = BrownSemiLight
-                    ),
-                ) {
-                    Text(
-                        text = "Unduh Peta Evakuasi",
-                        color = BrownVeryLight,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    
-                }
+
             }
         }
     }
     if (showDialog) {
         Dialog(onDismissRequest = { showDialog = false }) {
-            // Mengatur Image dalam Dialog untuk tampilan landscape
             Image(
                 painter = painterResource(id = model.imageCategoryEvacuationRoute),
                 contentDescription = stringResource(id = model.textCategoryEvacuationRoute),
-                contentScale = ContentScale.Fit,  // Mengatur skala konten
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .fillMaxWidth()  // Mengisi lebar maksimum
-                    .aspectRatio(16f / 9f)  // Mengatur aspect ratio untuk landscape
+                    .fillMaxWidth()
             )
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun EvacuationRouteDetailPreview() {
-    EvacuationRouteDetail(
-        model = EvacuationRouteModel(
-            imageCategoryEvacuationRoute = R.drawable.garut,
-            textCategoryEvacuationRoute = R.string.garut
-        ),
-        textCategory = "1"
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun EvacuationRouteDetailPreview() {
+//    EvacuationRouteDetail(
+//        model = EvacuationRouteModel(
+//            imageCategoryEvacuationRoute = R.drawable.garut,
+//            textCategoryEvacuationRoute = R.string.garut
+//        ),
+//        textCategory = "1"
+//    )
+//}

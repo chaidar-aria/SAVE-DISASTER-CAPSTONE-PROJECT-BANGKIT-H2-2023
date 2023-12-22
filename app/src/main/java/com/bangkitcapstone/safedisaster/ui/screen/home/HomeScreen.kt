@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -58,7 +58,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         viewModel.loadData(context)
     }
 
@@ -66,12 +66,30 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
 
     // Location permission state
     val locationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
-    LaunchedEffect(true) {
+
+    //notifiation state
+    val notificationPermissionState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        rememberPermissionState(Manifest.permission.POST_NOTIFICATIONS)
+    } else {
+        null // Izin notifikasi hanya dibutuhkan pada Android 13 (API 33) atau lebih baru
+    }
+    // State untuk izin penyimpanan
+    val storagePermissionState = rememberPermissionState(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+    // Permintaan izin lokasi
+    LaunchedEffect(key1 = true) {
         locationPermissionState.launchPermissionRequest()
     }
 
+    // Setelah izin lokasi diberikan, minta izin notifikasi
+    LaunchedEffect(key1 = locationPermissionState.hasPermission) {
+        if (locationPermissionState.hasPermission) {
+            notificationPermissionState?.launchPermissionRequest()
+        }
+    }
 
-    if (locationPermissionState.hasPermission) {
+
+    if (locationPermissionState.hasPermission && notificationPermissionState?.hasPermission == true) {
         viewModel.getLocationNewest(context)
         val location = viewModel.locationState.observeAsState().value
         val locationName = location?.let {

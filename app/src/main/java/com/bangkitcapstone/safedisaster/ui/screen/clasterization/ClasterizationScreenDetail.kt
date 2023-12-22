@@ -77,58 +77,42 @@ fun ClasterizationScreenDetail(model: ClasterizationModel, textCategory: String?
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .wrapContentHeight(align = Alignment.Top)
-            ) {
-                // Menambahkan keterangan untuk garis merah
-                Text(
-                    text = "Garis Merah: Jalur yang harus dilewati saat evakuasi.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                // Menambahkan keterangan untuk garis tebal
-                Text(
-                    text = "Garis Tebal: Jalan utama yang bisa dilewati banyak orang.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                // Menambahkan keterangan untuk warna biru
-                Text(
-                    text = "Warna Biru: Area yang ada air, tidak bisa dilewati.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                // Menambahkan keterangan untuk warna terang
-                Text(
-                    text = "Warna Terang: Daratan yang bisa digunakan untuk evakuasi.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                // Menambahkan keterangan untuk nama tempat
-                Text(
-                    text = "Nama Tempat: Daerah yang ditunjukkan dalam peta.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                // Tombil untuk mengunduh peta evakuasi
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = BrownDark, contentColor = BrownSemiLight
-                    ),
-                ) {
-                    Text(
-                        text = "Unduh Peta Evakuasi",
-                        color = BrownVeryLight,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-
-                }
-            }
+//            Column(
+//                modifier = Modifier
+//                    .padding(16.dp)
+//                    .wrapContentHeight(align = Alignment.Top)
+//            ) {
+//                // Menambahkan keterangan untuk garis merah
+//                Text(
+//                    text = "Garis Merah: Jalur yang harus dilewati saat evakuasi.",
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    color = Color.Black
+//                )
+//                // Menambahkan keterangan untuk garis tebal
+//                Text(
+//                    text = "Garis Tebal: Jalan utama yang bisa dilewati banyak orang.",
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    color = Color.Black
+//                )
+//                // Menambahkan keterangan untuk warna biru
+//                Text(
+//                    text = "Warna Biru: Area yang ada air, tidak bisa dilewati.",
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    color = Color.Black
+//                )
+//                // Menambahkan keterangan untuk warna terang
+//                Text(
+//                    text = "Warna Terang: Daratan yang bisa digunakan untuk evakuasi.",
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    color = Color.Black
+//                )
+//                // Menambahkan keterangan untuk nama tempat
+//                Text(
+//                    text = "Nama Tempat: Daerah yang ditunjukkan dalam peta.",
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    color = Color.Black
+//                )
+//                Spacer(modifier = Modifier.height(16.dp)) }
         }
     }
     if (showDialog) {

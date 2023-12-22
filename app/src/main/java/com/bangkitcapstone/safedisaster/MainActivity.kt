@@ -19,19 +19,12 @@ import com.google.firebase.auth.FirebaseAuth
 class MainActivity : ComponentActivity() {
     private lateinit var auth: FirebaseAuth
 
-    @OptIn(ExperimentalPermissionsApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
         setContent {
             SafeDisasterTheme {
-                val postNotificationPermission = rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
-                LaunchedEffect(key1=true){
-                    if (postNotificationPermission.hasPermission){
-                        postNotificationPermission.launchPermissionRequest()
-                    }
-                }
 
                 // A surface container using the 'background' color from the theme
                 Surface(
